@@ -1,6 +1,7 @@
 from flask import Flask
 from docVerification import generateDocVerification
 from individualReference import generateIndividualReference
+from memberReference import generateMemberReference
 from studentStatus import generateStudentStatus
 from workReference import generateWorkReference
 
@@ -21,6 +22,10 @@ def getDoc3():
 @app.route('/individual-reference', methods=["GET"])
 def getDoc4():
     return generateIndividualReference()
+
+@app.route('/member-reference', methods=["GET"])
+def getDoc5():
+    return generateMemberReference()
 
 if __name__ == '__main__':
     app.run(debug=True)
