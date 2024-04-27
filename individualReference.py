@@ -40,28 +40,25 @@ def generateIndividualReference():
         c.setFillColor("white")  # White color
 
         # Draw "Hello" on the page
-        c.drawString(25.2, 783, "TOMIWA PHILIP")
-
-        c.setFont("Montserrat-Bold", 14)
-        c.drawString(107.56, 736, "FUT606474")
-        c.drawString(105.68, 709, "Federal Univerisity of Technology")
+        c.drawString(24.48, 752, "TOMIWA PHILIP")
+        c.drawString(24.48, 684.16, "OLAOBA ISREAL")
 
         c.setFont("Montserrat-Regular", 14)
         c.setFillColor("black") 
 
-        c.drawString(220.64, 362, "Degree")
-        c.drawString(220.64, 336, "200L")
-        c.drawString(220.64, 307, "Pharmarcy")
-        c.drawString(220.64, 282, "Drugs and Science")
-        c.drawString(220.64, 256, "2014/2026")
+        c.drawString(249.84, 545, "Brother")
+        c.drawString(249.84, 517, "4 Years")
+        c.drawString(249.84, 460, "He is a good guy!")
+        c.drawString(249.84, 411, "NIL")
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(24.48, 165, "Federal University of Technology, Akure")
-        c.drawString(24.48, 146, "Bola Tinubu")
+        c.drawString(23.04, 203, "Olaoba Israel")
 
         c.setFont("Montserrat-Italic", 14)
-        c.drawString(24.48, 126, "Registrar")
-        c.drawString(24.48, 66, "12-04-6 12:30PM")
+
+        c.drawString(24.48, 185, "Manager")
+        c.drawString(24.48, 166, "08120915588")
+        c.drawString(24.48, 110, "12-04-6 12:30PM")
 
         c.setFont("Montserrat-Bold", 14)
 
@@ -74,7 +71,7 @@ def generateIndividualReference():
         qr.make(fit=True)
         img = qr.make_image(fill_color="black")
         img.save('qrcode.png')
-        c.drawInlineImage('qrcode.png', 410, 67)
+        c.drawInlineImage('qrcode.png', 410, 87)
 
 
         # Save the canvas to the PDF writer
