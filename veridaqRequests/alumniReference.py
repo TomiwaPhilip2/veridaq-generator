@@ -10,7 +10,7 @@ from PIL import Image
 
 def generateAlumniReference():
     # Load existing PDF
-    existing_pdf = 'Veridaq_Badges/member_template.pdf'  # Path to existing PDF file
+    existing_pdf = 'Veridaq_Badges/alumni_template.pdf'  # Path to existing PDF file
     output_pdf = 'generated_badges/modified_pdf.pdf'
 
     # Register Montserrat font
@@ -42,36 +42,26 @@ def generateAlumniReference():
         c.setFillColor("white")  # White color
 
         # Draw "Hello" on the page
-        c.drawString(24.48, 620, "TOMIWA PHILIP")
+        c.drawString(25.2, 560.24, "TOMIWA PHILIP")
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(142.56, 582, "FUT606474")
-        c.drawString(110.68, 555, "Kogi Association")
-
-        # Open an image file
-        image = Image.open("images/text_image.jpg")
-
-        # Resize the image to a specific size (e.g., 200x200)
-        resized_image = image.resize((117, 105))
-
-        # Save the resized image to a new file
-        resized_image.save("images/resized_image.jpg")
-
-        c.drawInlineImage('images/resized_image.jpg', 24.48, 365)
+        c.drawString(200.28, 522.6, "FUT606474")
+        c.drawString(107.4, 495.76, "Kogi Association")
 
         c.setFont("Montserrat-Regular", 14)
         c.setFillColor("black") 
 
-        c.drawString(179.28, 315.6, "2017")
-        c.drawString(180, 290.68, "No more info!")
+        c.drawString(363.6, 363.12, "Yes")
+        c.drawString(363.6, 326.4, "Alumni")
+        c.drawString(363.6, 288.24, "Great member")
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(24.48, 180.8, "KOGI Association")
-        c.drawString(24.48, 159.92, "Bola Tinubu")
+        c.drawString(24.48, 175.8, "KOGI Association")
+        c.drawString(24.48, 154.92, "Bola Tinubu")
 
         c.setFont("Montserrat-Italic", 14)
-        c.drawString(24.48, 141.2, "Secretary")
-        c.drawString(24.48, 80, "12-04-6 12:30PM")
+        c.drawString(24.48, 136.2, "Secretary")
+        c.drawString(24.48, 75, "12-04-6 12:30PM")
 
         c.setFont("Montserrat-Bold", 14)
 
