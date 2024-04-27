@@ -1,5 +1,6 @@
 from flask import Flask
 from docVerification import generateDocVerification
+from studentStatus import generateStudentStatus
 from workReference import generateWorkReference
 
 app = Flask(__name__)
@@ -14,7 +15,7 @@ def getDoc2():
 
 @app.route('/student-status', methods=["GET"])
 def getDoc3():
-    return generateWorkReference()
+    return generateStudentStatus()
 
 if __name__ == '__main__':
     app.run(debug=True)
