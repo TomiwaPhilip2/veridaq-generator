@@ -42,7 +42,7 @@ def generateMemberReference():
         c.setFillColor("white")  # White color
 
         # Draw "Hello" on the page
-        c.drawString(25.2, 783, "TOMIWA PHILIP")
+        c.drawString(25.2, 787, "TOMIWA PHILIP")
 
         c.setFont("Montserrat-Bold", 14)
         c.drawString(107.56, 736, "FUT606474")
@@ -52,7 +52,7 @@ def generateMemberReference():
         image = Image.open("text_image.jpg")
 
         # Resize the image to a specific size (e.g., 200x200)
-        resized_image = image.resize((148, 140))
+        resized_image = image.resize((117, 105))
 
         # Save the resized image to a new file
         resized_image.save("resized_image.jpg")
