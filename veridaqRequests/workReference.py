@@ -9,7 +9,7 @@ from flask import send_file
 def generateWorkReference():
     # Load existing PDF
     existing_pdf = 'Veridaq_Badges/work_template.pdf'  # Path to existing PDF file
-    output_pdf = 'modified_pdf.pdf'
+    output_pdf = 'generated_badges/modified_pdf.pdf'
 
     # Register Montserrat font
     montserrat_font_path = 'static/Montserrat-ExtraBold.ttf'  # Path to Montserrat font file
@@ -76,8 +76,8 @@ def generateWorkReference():
         qr.add_data('http://veridaq.com')  # Replace 'http://your-link.com' with your actual link
         qr.make(fit=True)
         img = qr.make_image(fill_color="black")
-        img.save('qrcode.png')
-        c.drawInlineImage('qrcode.png', 410, 67)
+        img.save('qrcode/qrcode.png')
+        c.drawInlineImage('qrcode/qrcode.png', 410, 67)
 
 
         # Save the canvas to the PDF writer

@@ -1,9 +1,10 @@
 from flask import Flask
-from docVerification import generateDocVerification
-from individualReference import generateIndividualReference
-from memberReference import generateMemberReference
-from studentStatus import generateStudentStatus
-from workReference import generateWorkReference
+from veridaqRequests.alumniReference import generateAlumniReference
+from veridaqRequests.docVerification import generateDocVerification
+from veridaqRequests.individualReference import generateIndividualReference
+from veridaqRequests.memberReference import generateMemberReference
+from veridaqRequests.studentStatus import generateStudentStatus
+from veridaqRequests.workReference import generateWorkReference
 
 app = Flask(__name__)
 
@@ -26,6 +27,10 @@ def getDoc4():
 @app.route('/member-reference', methods=["GET"])
 def getDoc5():
     return generateMemberReference()
+
+@app.route('/alumni-reference', methods=["GET"])
+def getDoc6():
+    return generateAlumniReference()
 
 if __name__ == '__main__':
     app.run(debug=True)
