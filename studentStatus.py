@@ -5,10 +5,12 @@ import PyPDF2
 import qrcode
 import io
 from flask import send_file
+from PIL import Image
+
 
 def generateStudentStatus():
     # Load existing PDF
-    existing_pdf = 'Veridaq_Badges/work_template.pdf'  # Path to existing PDF file
+    existing_pdf = 'Veridaq_Badges/student_template.pdf'  # Path to existing PDF file
     output_pdf = 'modified_pdf.pdf'
 
     # Register Montserrat font
@@ -40,23 +42,31 @@ def generateStudentStatus():
         c.setFillColor("white")  # White color
 
         # Draw "Hello" on the page
-        c.drawString(24.48, 782, "TOMIWA PHILIP")
+        c.drawString(25.2, 783, "TOMIWA PHILIP")
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(124.46, 749, "FUT606474")
-        c.drawString(155.48, 722, "Current")
-        c.drawString(100.48, 695, "FUTA")
+        c.drawString(107.56, 736, "FUT606474")
+        c.drawString(105.68, 709, "Federal Univerisity of Technology")
+
+        # Open an image file
+        image = Image.open("text_image.jpg")
+
+        # Resize the image to a specific size (e.g., 200x200)
+        resized_image = image.resize((148, 140))
+
+        # Save the resized image to a new file
+        resized_image.save("resized_image.jpg")
+
+        c.drawInlineImage('resized_image.jpg', 24.04, 413)
 
         c.setFont("Montserrat-Regular", 14)
         c.setFillColor("black") 
 
-        c.drawString(167.04, 549, "ADHOC")
-        c.drawString(167.04, 522, "CHIEF TYPIST")
-        c.drawString(167.04, 495, "TYPING")
-        c.drawString(167.04, 470, "3-04-1997/04-05-2024")
-        c.drawString(167.04, 438, "This certificate is from Covenant University itself!")
-        c.drawString(167.04, 348, "Bought a Car!")
-        c.drawString(167.04, 301, "He is a good person")
+        c.drawString(220.64, 362, "Degree")
+        c.drawString(220.64, 336, "200L")
+        c.drawString(220.64, 307, "Pharmarcy")
+        c.drawString(220.64, 282, "Drugs and Science")
+        c.drawString(220.64, 256, "2014/2026")
 
         c.setFont("Montserrat-Bold", 14)
         c.drawString(24.48, 165, "Federal University of Technology, Akure")
