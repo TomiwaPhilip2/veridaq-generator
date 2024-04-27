@@ -42,11 +42,11 @@ def generateMemberReference():
         c.setFillColor("white")  # White color
 
         # Draw "Hello" on the page
-        c.drawString(25.2, 787, "TOMIWA PHILIP")
+        c.drawString(24.48, 620, "TOMIWA PHILIP")
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(107.56, 736, "FUT606474")
-        c.drawString(105.68, 709, "Federal Univerisity of Technology")
+        c.drawString(142.56, 582, "FUT606474")
+        c.drawString(110.68, 555, "Kogi Association")
 
         # Open an image file
         image = Image.open("text_image.jpg")
@@ -57,29 +57,26 @@ def generateMemberReference():
         # Save the resized image to a new file
         resized_image.save("resized_image.jpg")
 
-        c.drawInlineImage('resized_image.jpg', 24.04, 413)
+        c.drawInlineImage('resized_image.jpg', 24.48, 365)
 
         c.setFont("Montserrat-Regular", 14)
         c.setFillColor("black") 
 
-        c.drawString(220.64, 362, "Degree")
-        c.drawString(220.64, 336, "200L")
-        c.drawString(220.64, 307, "Pharmarcy")
-        c.drawString(220.64, 282, "Drugs and Science")
-        c.drawString(220.64, 256, "2014/2026")
+        c.drawString(179.28, 315.6, "2017")
+        c.drawString(180, 290.68, "No more info!")
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(24.48, 165, "Federal University of Technology, Akure")
-        c.drawString(24.48, 146, "Bola Tinubu")
+        c.drawString(24.48, 180.8, "KOGI Association")
+        c.drawString(24.48, 159.92, "Bola Tinubu")
 
         c.setFont("Montserrat-Italic", 14)
-        c.drawString(24.48, 126, "Registrar")
-        c.drawString(24.48, 66, "12-04-6 12:30PM")
+        c.drawString(24.48, 141.2, "Secretary")
+        c.drawString(24.48, 80, "12-04-6 12:30PM")
 
         c.setFont("Montserrat-Bold", 14)
 
         c.setFillColor("white")
-        c.drawString(462.24, 816, "Veridaq-1345")
+        c.drawString(462.24, 640.04, "Veridaq-1345")
 
         # Generate QR code and embed it into the PDF
         qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=4, border=4)
@@ -87,7 +84,7 @@ def generateMemberReference():
         qr.make(fit=True)
         img = qr.make_image(fill_color="black")
         img.save('qrcode.png')
-        c.drawInlineImage('qrcode.png', 410, 67)
+        c.drawInlineImage('qrcode.png', 412.88, 85.76)
 
 
         # Save the canvas to the PDF writer
