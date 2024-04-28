@@ -6,12 +6,18 @@ import qrcode
 import io
 from flask import send_file
 from PIL import Image
+import requests
+from io import BytesIO
 
 
-def generateMemberReference():
+def generateStudentStatus(
+        nameOfStudent, studentID, nameOfInstitution, passportUrl, categoryOfStudy, currentLevel,
+        courseOfStudy, faculty, yearOfEntryAndExit, nameOfAdmin, adminDesignation, currentDateTime,
+        badgeID
+):
     # Load existing PDF
-    existing_pdf = 'Veridaq_Badges/member_template.pdf'  # Path to existing PDF file
-    output_pdf = 'modified_pdf.pdf'
+    existing_pdf = 'Veridaq_Badges/student_template.pdf'  # Path to existing PDF file
+    output_pdf = 'generated_badges/student_pdf.pdf'
 
     # Register Montserrat font
     montserrat_font_path = 'static/Montserrat-ExtraBold.ttf'  # Path to Montserrat font file
@@ -42,49 +48,63 @@ def generateMemberReference():
         c.setFillColor("white")  # White color
 
         # Draw "Hello" on the page
-        c.drawString(24.48, 620, "TOMIWA PHILIP")
+        c.drawString(25.2, 783, nameOfStudent)
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(142.56, 582, "FUT606474")
-        c.drawString(110.68, 555, "Kogi Association")
+        c.drawString(107.56, 736, studentID)
+        c.drawString(105.68, 709, nameOfInstitution)
 
-        # Open an image file
-        image = Image.open("text_image.jpg")
+        # URL of the image
+        url = passportUrl
 
-        # Resize the image to a specific size (e.g., 200x200)
-        resized_image = image.resize((117, 105))
+        # Send a GET request to the URL to download the image
+        response = requests.get(url)
 
-        # Save the resized image to a new file
-        resized_image.save("resized_image.jpg")
+        # Check if the request was successful
+        if response.status_code == 200:
+            # Open the image from the response content
+            image = Image.open(BytesIO(response.content))
 
-        c.drawInlineImage('resized_image.jpg', 24.48, 365)
+            # Now you can work with the image as needed
+            resized_image = image.resize((148, 140))
+
+            resized_image.save("images/student_resized_image.jpg")
+
+        else:
+            print("Failed to download the image")
+            return "Unable to download or read image from remote url", 400
+
+        c.drawInlineImage('images/student_resized_image.jpg', 24.04, 413)
 
         c.setFont("Montserrat-Regular", 14)
         c.setFillColor("black") 
 
-        c.drawString(179.28, 315.6, "2017")
-        c.drawString(180, 290.68, "No more info!")
+        c.drawString(220.64, 362, categoryOfStudy)
+        c.drawString(220.64, 336, currentLevel)
+        c.drawString(220.64, 307, courseOfStudy)
+        c.drawString(220.64, 282, faculty)
+        c.drawString(220.64, 256, yearOfEntryAndExit)
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(24.48, 180.8, "KOGI Association")
-        c.drawString(24.48, 159.92, "Bola Tinubu")
+        c.drawString(24.48, 165, nameOfInstitution)
+        c.drawString(24.48, 146, nameOfAdmin)
 
         c.setFont("Montserrat-Italic", 14)
-        c.drawString(24.48, 141.2, "Secretary")
-        c.drawString(24.48, 80, "12-04-6 12:30PM")
+        c.drawString(24.48, 126, adminDesignation)
+        c.drawString(24.48, 66, currentDateTime)
 
         c.setFont("Montserrat-Bold", 14)
 
         c.setFillColor("white")
-        c.drawString(462.24, 640.04, "Veridaq-1345")
+        c.drawString(462.24, 816, badgeID)
 
         # Generate QR code and embed it into the PDF
         qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=4, border=4)
         qr.add_data('http://veridaq.com')  # Replace 'http://your-link.com' with your actual link
         qr.make(fit=True)
         img = qr.make_image(fill_color="black")
-        img.save('qrcode.png')
-        c.drawInlineImage('qrcode.png', 412.88, 85.76)
+        img.save('qrcode/student_qrcode.png')
+        c.drawInlineImage('qrcode/student_qrcode.png', 410, 67)
 
 
         # Save the canvas to the PDF writer

@@ -5,13 +5,15 @@ import PyPDF2
 import qrcode
 import io
 from flask import send_file
-from PIL import Image
 
 
-def generateStudentStatus():
+def generateAlumniReference(
+        alumniName, alumniID, nameOfInstitution, alumniSince, alumniCategory, moreInfo,
+        nameOfAdmin, adminDesignation, currentDateTime, badgeID
+):
     # Load existing PDF
-    existing_pdf = 'Veridaq_Badges/student_template.pdf'  # Path to existing PDF file
-    output_pdf = 'modified_pdf.pdf'
+    existing_pdf = 'Veridaq_Badges/alumni_template.pdf'  # Path to existing PDF file
+    output_pdf = 'generated_badges/alumni_pdf.pdf'
 
     # Register Montserrat font
     montserrat_font_path = 'static/Montserrat-ExtraBold.ttf'  # Path to Montserrat font file
@@ -42,52 +44,39 @@ def generateStudentStatus():
         c.setFillColor("white")  # White color
 
         # Draw "Hello" on the page
-        c.drawString(25.2, 783, "TOMIWA PHILIP")
+        c.drawString(25.2, 560.24, alumniName)
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(107.56, 736, "FUT606474")
-        c.drawString(105.68, 709, "Federal Univerisity of Technology")
-
-        # Open an image file
-        image = Image.open("text_image.jpg")
-
-        # Resize the image to a specific size (e.g., 200x200)
-        resized_image = image.resize((148, 140))
-
-        # Save the resized image to a new file
-        resized_image.save("resized_image.jpg")
-
-        c.drawInlineImage('resized_image.jpg', 24.04, 413)
+        c.drawString(200.28, 522.6, alumniID)
+        c.drawString(107.4, 495.76, nameOfInstitution)
 
         c.setFont("Montserrat-Regular", 14)
         c.setFillColor("black") 
 
-        c.drawString(220.64, 362, "Degree")
-        c.drawString(220.64, 336, "200L")
-        c.drawString(220.64, 307, "Pharmarcy")
-        c.drawString(220.64, 282, "Drugs and Science")
-        c.drawString(220.64, 256, "2014/2026")
+        c.drawString(363.6, 363.12, alumniSince)
+        c.drawString(363.6, 326.4, alumniCategory)
+        c.drawString(363.6, 288.24, moreInfo)
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(24.48, 165, "Federal University of Technology, Akure")
-        c.drawString(24.48, 146, "Bola Tinubu")
+        c.drawString(24.48, 175.8, nameOfInstitution)
+        c.drawString(24.48, 154.92, nameOfAdmin)
 
         c.setFont("Montserrat-Italic", 14)
-        c.drawString(24.48, 126, "Registrar")
-        c.drawString(24.48, 66, "12-04-6 12:30PM")
+        c.drawString(24.48, 136.2, adminDesignation)
+        c.drawString(24.48, 75, currentDateTime)
 
         c.setFont("Montserrat-Bold", 14)
 
         c.setFillColor("white")
-        c.drawString(462.24, 816, "Veridaq-1345")
+        c.drawString(462.24, 640.04, badgeID)
 
         # Generate QR code and embed it into the PDF
         qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=4, border=4)
         qr.add_data('http://veridaq.com')  # Replace 'http://your-link.com' with your actual link
         qr.make(fit=True)
         img = qr.make_image(fill_color="black")
-        img.save('qrcode.png')
-        c.drawInlineImage('qrcode.png', 410, 67)
+        img.save('qrcode/alumni_qrcode.png')
+        c.drawInlineImage('qrcode/alumni_qrcode.png', 412.88, 85.76)
 
 
         # Save the canvas to the PDF writer

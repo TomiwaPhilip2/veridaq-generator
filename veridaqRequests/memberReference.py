@@ -5,11 +5,18 @@ import PyPDF2
 import qrcode
 import io
 from flask import send_file
+from PIL import Image
+import requests
+from io import BytesIO
 
-def generateWorkReference():
+
+def generateMemberReference(
+        memberName, memberID, nameOfInstitution, passportUrl, memberSince, moreInfo, nameOfOrganization,
+        nameOfAdmin, adminDesignation, currentDateTime, badgeID
+):
     # Load existing PDF
-    existing_pdf = 'Veridaq_Badges/work_template.pdf'  # Path to existing PDF file
-    output_pdf = 'modified_pdf.pdf'
+    existing_pdf = 'Veridaq_Badges/member_template.pdf'  # Path to existing PDF file
+    output_pdf = 'generated_badges/member_pdf.pdf'
 
     # Register Montserrat font
     montserrat_font_path = 'static/Montserrat-ExtraBold.ttf'  # Path to Montserrat font file
@@ -40,44 +47,60 @@ def generateWorkReference():
         c.setFillColor("white")  # White color
 
         # Draw "Hello" on the page
-        c.drawString(24.48, 782, "TOMIWA PHILIP")
+        c.drawString(24.48, 620, memberName)
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(124.46, 749, "FUT606474")
-        c.drawString(155.48, 722, "Current")
-        c.drawString(100.48, 695, "FUTA")
+        c.drawString(142.56, 582, memberID)
+        c.drawString(110.68, 555, nameOfInstitution)
+
+        # URL of the image
+        url = passportUrl
+
+        # Send a GET request to the URL to download the image
+        response = requests.get(url)
+
+        # Check if the request was successful
+        if response.status_code == 200:
+            # Open the image from the response content
+            image = Image.open(BytesIO(response.content))
+
+            # Now you can work with the image as needed
+            resized_image = image.resize((117, 105))
+
+            resized_image.save("images/member_resized_image.jpg")
+
+        else:
+            print("Failed to download the image")
+            return "Unable to download or read image from remote url", 400
+
+        c.drawInlineImage('images/member_resized_image.jpg', 24.48, 365)
 
         c.setFont("Montserrat-Regular", 14)
         c.setFillColor("black") 
 
-        c.drawString(167.04, 549, "ADHOC")
-        c.drawString(167.04, 522, "CHIEF TYPIST")
-        c.drawString(167.04, 495, "TYPING")
-        c.drawString(167.04, 470, "3-04-1997/04-05-2024")
-        c.drawString(167.04, 438, "This certificate is from Covenant University itself!")
-        c.drawString(167.04, 348, "Bought a Car!")
-        c.drawString(167.04, 301, "He is a good person")
+        c.drawString(179.28, 315.6, memberSince)
+        c.drawString(180, 290.68, moreInfo)
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(24.48, 165, "Federal University of Technology, Akure")
-        c.drawString(24.48, 146, "Bola Tinubu")
+        c.drawString(24.48, 180.8, nameOfInstitution)
+        c.drawString(24.48, 159.92, nameOfAdmin)
 
         c.setFont("Montserrat-Italic", 14)
-        c.drawString(24.48, 126, "Registrar")
-        c.drawString(24.48, 66, "12-04-6 12:30PM")
+        c.drawString(24.48, 141.2, adminDesignation)
+        c.drawString(24.48, 80, currentDateTime)
 
         c.setFont("Montserrat-Bold", 14)
 
         c.setFillColor("white")
-        c.drawString(462.24, 816, "Veridaq-1345")
+        c.drawString(462.24, 640.04, badgeID)
 
         # Generate QR code and embed it into the PDF
         qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=4, border=4)
         qr.add_data('http://veridaq.com')  # Replace 'http://your-link.com' with your actual link
         qr.make(fit=True)
         img = qr.make_image(fill_color="black")
-        img.save('qrcode.png')
-        c.drawInlineImage('qrcode.png', 410, 67)
+        img.save('qrcode/member_qrcode.png')
+        c.drawInlineImage('qrcode/member_qrcode.png', 412.88, 85.76)
 
 
         # Save the canvas to the PDF writer
