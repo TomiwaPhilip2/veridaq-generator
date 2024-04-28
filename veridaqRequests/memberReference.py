@@ -16,7 +16,7 @@ def generateMemberReference(
 ):
     # Load existing PDF
     existing_pdf = 'Veridaq_Badges/member_template.pdf'  # Path to existing PDF file
-    output_pdf = 'generated_badges/modified_pdf.pdf'
+    output_pdf = 'generated_badges/member_pdf.pdf'
 
     # Register Montserrat font
     montserrat_font_path = 'static/Montserrat-ExtraBold.ttf'  # Path to Montserrat font file
