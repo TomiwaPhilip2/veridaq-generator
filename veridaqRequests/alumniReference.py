@@ -75,8 +75,8 @@ def generateAlumniReference(
         qr.add_data('http://veridaq.com')  # Replace 'http://your-link.com' with your actual link
         qr.make(fit=True)
         img = qr.make_image(fill_color="black")
-        img.save('qrcode/qrcode.png')
-        c.drawInlineImage('qrcode/qrcode.png', 412.88, 85.76)
+        img.save('qrcode/alumni_qrcode.png')
+        c.drawInlineImage('qrcode/alumni_qrcode.png', 412.88, 85.76)
 
 
         # Save the canvas to the PDF writer

@@ -73,8 +73,8 @@ def generateIndividualReference(
         qr.add_data('http://veridaq.com')  # Replace 'http://your-link.com' with your actual link
         qr.make(fit=True)
         img = qr.make_image(fill_color="black")
-        img.save('qrcode/qrcode.png')
-        c.drawInlineImage('qrcode/qrcode.png', 410, 87)
+        img.save('qrcode/individual_qrcode.png')
+        c.drawInlineImage('qrcode/individual_qrcode.png', 410, 87)
 
 
         # Save the canvas to the PDF writer

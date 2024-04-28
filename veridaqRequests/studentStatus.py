@@ -103,8 +103,8 @@ def generateStudentStatus(
         qr.add_data('http://veridaq.com')  # Replace 'http://your-link.com' with your actual link
         qr.make(fit=True)
         img = qr.make_image(fill_color="black")
-        img.save('qrcode/qrcode.png')
-        c.drawInlineImage('qrcode/qrcode.png', 410, 67)
+        img.save('qrcode/student_qrcode.png')
+        c.drawInlineImage('qrcode/student_qrcode.png', 410, 67)
 
 
         # Save the canvas to the PDF writer
