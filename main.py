@@ -166,7 +166,6 @@ def getDoc6():
             nameOfInstitution = data["nameOfInstitution"]
             alumniSince = data["alumniSince"]
             alumniCategory = data["alumniCategory"]
-            nameOfOrganization = data["nameOfOrganization"]
             nameOfAdmin = data["nameOfAdmin"]
             adminDesignation = data["adminDesignation"]
             currentDateTime = data["currentDateTime"]
@@ -176,7 +175,7 @@ def getDoc6():
             
             # Generate the PDF using the received data
             return generateAlumniReference(alumniName, alumniID, nameOfInstitution, alumniSince, alumniCategory, moreInfo, 
-                                            nameOfOrganization, nameOfAdmin, adminDesignation, currentDateTime, badgeID)
+                                            nameOfAdmin, adminDesignation, currentDateTime, badgeID)
         except KeyError as e:
             return f"Missing required field: {e}", 400
     else:
