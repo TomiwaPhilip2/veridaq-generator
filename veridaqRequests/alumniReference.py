@@ -5,10 +5,12 @@ import PyPDF2
 import qrcode
 import io
 from flask import send_file
-from PIL import Image
 
 
-def generateAlumniReference():
+def generateAlumniReference(
+        alumniName, alumniID, nameOfInstitution, alumniSince, alumniCategory, moreInfo,
+        nameOfAdmin, adminDesignation, currentDateTime, badgeID
+):
     # Load existing PDF
     existing_pdf = 'Veridaq_Badges/alumni_template.pdf'  # Path to existing PDF file
     output_pdf = 'generated_badges/modified_pdf.pdf'
@@ -42,31 +44,31 @@ def generateAlumniReference():
         c.setFillColor("white")  # White color
 
         # Draw "Hello" on the page
-        c.drawString(25.2, 560.24, "TOMIWA PHILIP")
+        c.drawString(25.2, 560.24, alumniName)
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(200.28, 522.6, "FUT606474")
-        c.drawString(107.4, 495.76, "Kogi Association")
+        c.drawString(200.28, 522.6, alumniID)
+        c.drawString(107.4, 495.76, nameOfInstitution)
 
         c.setFont("Montserrat-Regular", 14)
         c.setFillColor("black") 
 
-        c.drawString(363.6, 363.12, "Yes")
-        c.drawString(363.6, 326.4, "Alumni")
-        c.drawString(363.6, 288.24, "Great member")
+        c.drawString(363.6, 363.12, alumniSince)
+        c.drawString(363.6, 326.4, alumniCategory)
+        c.drawString(363.6, 288.24, moreInfo)
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(24.48, 175.8, "KOGI Association")
-        c.drawString(24.48, 154.92, "Bola Tinubu")
+        c.drawString(24.48, 175.8, nameOfInstitution)
+        c.drawString(24.48, 154.92, nameOfAdmin)
 
         c.setFont("Montserrat-Italic", 14)
-        c.drawString(24.48, 136.2, "Secretary")
-        c.drawString(24.48, 75, "12-04-6 12:30PM")
+        c.drawString(24.48, 136.2, adminDesignation)
+        c.drawString(24.48, 75, currentDateTime)
 
         c.setFont("Montserrat-Bold", 14)
 
         c.setFillColor("white")
-        c.drawString(462.24, 640.04, "Veridaq-1345")
+        c.drawString(462.24, 640.04, badgeID)
 
         # Generate QR code and embed it into the PDF
         qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=4, border=4)

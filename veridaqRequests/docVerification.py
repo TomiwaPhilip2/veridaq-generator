@@ -4,16 +4,25 @@ from reportlab.pdfbase.ttfonts import TTFont
 import PyPDF2
 import qrcode
 import io
-from flask import Flask, send_file
+from flask import send_file
 
-def generateDocVerification():
+def generateDocVerification(
+        nameOfOrganization, nameOfIndividual, documentType, documentName, documentID, moreInfo,
+        nameOfAdmin, adminDesignation, currentDateTime, badgeID
+):
     # Load existing PDF
     existing_pdf = 'Veridaq_Badges/doc_template.pdf'  # Path to existing PDF file
     output_pdf = 'modified_pdf.pdf'
 
     # Register Montserrat font
     montserrat_font_path = 'static/Montserrat-ExtraBold.ttf'  # Path to Montserrat font file
-    pdfmetrics.registerFont(TTFont("Montserrat", montserrat_font_path))
+    pdfmetrics.registerFont(TTFont("Montserrat-ExtraBold", montserrat_font_path))
+    montserrat_font_path = 'static/Montserrat-Bold.ttf'  # Path to Montserrat font file
+    pdfmetrics.registerFont(TTFont("Montserrat-Bold", montserrat_font_path))
+    montserrat_font_path = 'static/Montserrat-Regular.ttf'  # Path to Montserrat font file
+    pdfmetrics.registerFont(TTFont("Montserrat-Regular", montserrat_font_path))
+    montserrat_font_path = 'static/Montserrat-Italic.ttf'  # Path to Montserrat font file
+    pdfmetrics.registerFont(TTFont("Montserrat-Italic", montserrat_font_path))
 
     # Open the modified PDF
     with open(existing_pdf, 'rb') as file:
@@ -34,30 +43,33 @@ def generateDocVerification():
         c.setFillColor("white")  # White color
 
         # Draw "Hello" on the page
-        c.drawString(23.04, 762.08, "COVENANT UNIVERSITY")
-        c.drawString(23.04, 690.64, "TOMIWA PHILIP")
+        c.drawString(23.04, 762.08, nameOfOrganization)
+        c.drawString(23.04, 690.64, nameOfIndividual)
 
         montserrat_font_path = 'static/Montserrat-Regular.ttf'  # Path to Montserrat font file
         pdfmetrics.registerFont(TTFont("Montserrat2", montserrat_font_path))
         c.setFont("Montserrat2", 14)
         c.setFillColor("black") 
 
-        c.drawString(199.4, 547, "CERTIFICATE")
-        c.drawString(199.4, 519, "CERTIFICATE OF DEGREE COMPLETION")
-        c.drawString(199.4, 491, "4637CU")
-        c.drawString(199.4, 465, "TRUE")
-        c.drawString(199.4, 438, "This certificate is from Covenant University itself!")
-        c.drawString(24.48, 234, "Covenant University")
-        c.drawString(24.48, 212, "Bushiri Gamma")
-        c.drawString(24.48, 192, "Registrar")
-        c.drawString(24.48, 138, "12-04-6 12:30PM")
+        c.drawString(199.4, 547, documentType)
+        c.drawString(199.4, 519, documentName)
+        c.drawString(199.4, 491, documentID)
+        c.drawString(199.4, 465, "True")
+        c.drawString(199.4, 438, moreInfo)
 
-        montserrat_font_path = 'static/Montserrat-Bold.ttf'  # Path to Montserrat font file
-        pdfmetrics.registerFont(TTFont("Montserrat3", montserrat_font_path))
-        c.setFont("Montserrat", 14)
+        c.setFont("Montserrat-Bold", 14)
+
+        c.drawString(24.48, 234, nameOfIndividual)
+        c.drawString(24.48, 212, nameOfAdmin)
+
+        c.setFont("Montserrat-Italic", 14)
+        c.drawString(24.48, 192, adminDesignation)
+        c.drawString(24.48, 138, currentDateTime)
+
+        c.setFont("Montserrat-Bold", 14)        
 
         c.setFillColor("white")
-        c.drawString(462.24, 816, "Veridaq-1345")
+        c.drawString(462.24, 816, badgeID)
 
         # Generate QR code and embed it into the PDF
         qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=4, border=4)

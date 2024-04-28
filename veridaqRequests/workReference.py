@@ -6,7 +6,11 @@ import qrcode
 import io
 from flask import send_file
 
-def generateWorkReference():
+def generateWorkReference( 
+        nameOfEmployee, employeeID, employeeStatus, nameOfInstitution, subType, 
+        designation, department, period, jobFunctions, notableAchievement, personalitySummary, 
+        nameOfAdmin, adminDesignation, currentDateTime, badgeID
+    ):
     # Load existing PDF
     existing_pdf = 'Veridaq_Badges/work_template.pdf'  # Path to existing PDF file
     output_pdf = 'generated_badges/modified_pdf.pdf'
@@ -40,36 +44,36 @@ def generateWorkReference():
         c.setFillColor("white")  # White color
 
         # Draw "Hello" on the page
-        c.drawString(24.48, 782, "TOMIWA PHILIP")
+        c.drawString(24.48, 782, nameOfEmployee)
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(124.46, 749, "FUT606474")
-        c.drawString(155.48, 722, "Current")
-        c.drawString(100.48, 695, "FUTA")
+        c.drawString(124.46, 749, employeeID)
+        c.drawString(155.48, 722, employeeStatus)
+        c.drawString(100.48, 695, nameOfInstitution)
 
         c.setFont("Montserrat-Regular", 14)
         c.setFillColor("black") 
 
-        c.drawString(167.04, 549, "ADHOC")
-        c.drawString(167.04, 522, "CHIEF TYPIST")
-        c.drawString(167.04, 495, "TYPING")
-        c.drawString(167.04, 470, "3-04-1997/04-05-2024")
-        c.drawString(167.04, 438, "This certificate is from Covenant University itself!")
-        c.drawString(167.04, 348, "Bought a Car!")
-        c.drawString(167.04, 301, "He is a good person")
+        c.drawString(167.04, 549, subType)
+        c.drawString(167.04, 522, designation)
+        c.drawString(167.04, 495, department)
+        c.drawString(167.04, 470, period)
+        c.drawString(167.04, 438, jobFunctions)
+        c.drawString(167.04, 348, notableAchievement)
+        c.drawString(167.04, 301, personalitySummary)
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(24.48, 165, "Federal University of Technology, Akure")
-        c.drawString(24.48, 146, "Bola Tinubu")
+        c.drawString(24.48, 165, nameOfInstitution)
+        c.drawString(24.48, 146, nameOfAdmin)
 
         c.setFont("Montserrat-Italic", 14)
-        c.drawString(24.48, 126, "Registrar")
-        c.drawString(24.48, 66, "12-04-6 12:30PM")
+        c.drawString(24.48, 126, adminDesignation)
+        c.drawString(24.48, 66, currentDateTime)
 
         c.setFont("Montserrat-Bold", 14)
 
         c.setFillColor("white")
-        c.drawString(462.24, 816, "Veridaq-1345")
+        c.drawString(462.24, 816, badgeID)
 
         # Generate QR code and embed it into the PDF
         qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=4, border=4)

@@ -6,9 +6,14 @@ import qrcode
 import io
 from flask import send_file
 from PIL import Image
+import requests
+from io import BytesIO
 
 
-def generateMemberReference():
+def generateMemberReference(
+        memberName, memberID, nameOfInstitution, passportUrl, memberSince, moreInfo, nameOfOrganization,
+        nameOfAdmin, adminDesignation, currentDateTime, badgeID
+):
     # Load existing PDF
     existing_pdf = 'Veridaq_Badges/member_template.pdf'  # Path to existing PDF file
     output_pdf = 'generated_badges/modified_pdf.pdf'
@@ -42,41 +47,52 @@ def generateMemberReference():
         c.setFillColor("white")  # White color
 
         # Draw "Hello" on the page
-        c.drawString(24.48, 620, "TOMIWA PHILIP")
+        c.drawString(24.48, 620, memberName)
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(142.56, 582, "FUT606474")
-        c.drawString(110.68, 555, "Kogi Association")
+        c.drawString(142.56, 582, memberID)
+        c.drawString(110.68, 555, nameOfInstitution)
 
-        # Open an image file
-        image = Image.open("images/text_image.jpg")
+        # URL of the image
+        url = passportUrl
 
-        # Resize the image to a specific size (e.g., 200x200)
-        resized_image = image.resize((117, 105))
+        # Send a GET request to the URL to download the image
+        response = requests.get(url)
 
-        # Save the resized image to a new file
-        resized_image.save("images/resized_image.jpg")
+        # Check if the request was successful
+        if response.status_code == 200:
+            # Open the image from the response content
+            image = Image.open(BytesIO(response.content))
 
-        c.drawInlineImage('images/resized_image.jpg', 24.48, 365)
+            # Now you can work with the image as needed
+            resized_image = image.resize((117, 105))
+
+            resized_image.save("images/member_resized_image.jpg")
+
+        else:
+            print("Failed to download the image")
+            return "Unable to download or read image from remote url", 400
+
+        c.drawInlineImage('images/member_resized_image.jpg', 24.48, 365)
 
         c.setFont("Montserrat-Regular", 14)
         c.setFillColor("black") 
 
-        c.drawString(179.28, 315.6, "2017")
-        c.drawString(180, 290.68, "No more info!")
+        c.drawString(179.28, 315.6, memberSince)
+        c.drawString(180, 290.68, moreInfo)
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(24.48, 180.8, "KOGI Association")
-        c.drawString(24.48, 159.92, "Bola Tinubu")
+        c.drawString(24.48, 180.8, nameOfInstitution)
+        c.drawString(24.48, 159.92, nameOfAdmin)
 
         c.setFont("Montserrat-Italic", 14)
-        c.drawString(24.48, 141.2, "Secretary")
-        c.drawString(24.48, 80, "12-04-6 12:30PM")
+        c.drawString(24.48, 141.2, adminDesignation)
+        c.drawString(24.48, 80, currentDateTime)
 
         c.setFont("Montserrat-Bold", 14)
 
         c.setFillColor("white")
-        c.drawString(462.24, 640.04, "Veridaq-1345")
+        c.drawString(462.24, 640.04, badgeID)
 
         # Generate QR code and embed it into the PDF
         qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=4, border=4)

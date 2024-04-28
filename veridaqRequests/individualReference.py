@@ -6,7 +6,10 @@ import qrcode
 import io
 from flask import send_file
 
-def generateIndividualReference():
+def generateIndividualReference(
+        individualName, issuerName, relationship, yearsOfRelationship, personalityReview,
+        recommendationStatement, issuerDesignation, issuerContact, currentDateTime, badgeID
+):
     # Load existing PDF
     existing_pdf = 'Veridaq_Badges/individual_template.pdf'  # Path to existing PDF file
     output_pdf = 'generated_badges/modified_pdf.pdf'
@@ -40,30 +43,30 @@ def generateIndividualReference():
         c.setFillColor("white")  # White color
 
         # Draw "Hello" on the page
-        c.drawString(24.48, 752, "TOMIWA PHILIP")
-        c.drawString(24.48, 684.16, "OLAOBA ISREAL")
+        c.drawString(24.48, 752, individualName)
+        c.drawString(24.48, 684.16, issuerName)
 
         c.setFont("Montserrat-Regular", 14)
         c.setFillColor("black") 
 
-        c.drawString(249.84, 545, "Brother")
-        c.drawString(249.84, 517, "4 Years")
-        c.drawString(249.84, 460, "He is a good guy!")
-        c.drawString(249.84, 411, "NIL")
+        c.drawString(249.84, 545, relationship)
+        c.drawString(249.84, 517, yearsOfRelationship)
+        c.drawString(249.84, 460, personalityReview)
+        c.drawString(249.84, 411, recommendationStatement)
 
         c.setFont("Montserrat-Bold", 14)
-        c.drawString(23.04, 203, "Olaoba Israel")
+        c.drawString(23.04, 203, issuerName)
 
         c.setFont("Montserrat-Italic", 14)
 
-        c.drawString(24.48, 185, "Manager")
-        c.drawString(24.48, 166, "08120915588")
-        c.drawString(24.48, 110, "12-04-6 12:30PM")
+        c.drawString(24.48, 185, issuerDesignation)
+        c.drawString(24.48, 166, issuerContact)
+        c.drawString(24.48, 110, currentDateTime)
 
         c.setFont("Montserrat-Bold", 14)
 
         c.setFillColor("white")
-        c.drawString(462.24, 816, "Veridaq-1345")
+        c.drawString(462.24, 816, badgeID)
 
         # Generate QR code and embed it into the PDF
         qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=4, border=4)
