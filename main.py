@@ -8,9 +8,9 @@ from veridaqRequests.workReference import generateWorkReference
 
 app = Flask(__name__)
 
-@app.route('/doc-verification', methods=["GET"])
+@app.route('/doc-verification', methods=["POST"])
 def getDoc1():
-    if request.method == "GET" and request.is_json:
+    if request.method == "POST" and request.is_json:
         try:
             data = request.json  # Access the JSON data from the request
             # Extract required fields from the JSON data
@@ -35,26 +35,26 @@ def getDoc1():
         return "Only GET requests with JSON data are allowed", 400
 
 
-@app.route('/work-reference', methods=["GET"])
+@app.route('/work-reference', methods=["POST"])
 def getDoc2():
-    if request.method == "GET" and request.is_json:
+    if request.method == "POST" and request.is_json:
         try:
             data = request.json  # Access the JSON data from the request
             # Extract required fields from the JSON data
             nameOfEmployee = data["nameOfEmployee"]
             employeeID = data["employeeID"]
             employeeStatus = data["employeeStatus"]
-            nameOfInstitution = data["nameOfInstitution"]
             subType = data["subType"]
             designation = data["designation"]
             department = data["department"]
             period = data["period"]
             jobFunctions = data["jobFunctions"]
             nameOfAdmin = data["nameOfAdmin"]
-            adminDesignation = data["adminDesignation"]
-            currentDateTime = data["currentDateTime"]
             badgeID = data["badgeID"]
 
+            nameOfInstitution = data.get("nameOfInstitution", "NIL")
+            adminDesignation = data.get("adminDesignation", "NIL")
+            currentDateTime = data.get("currentDateTime", "NIL")
             notableAchievement = data.get("notableAchievement", "NIL")
             personalitySummary = data.get("personalitySummary", "NIL")
             
@@ -68,9 +68,9 @@ def getDoc2():
         return "Only GET requests with JSON data are allowed", 400
 
 
-@app.route('/student-status', methods=["GET"])
+@app.route('/student-status', methods=["POST"])
 def getDoc3():
-    if request.method == "GET" and request.is_json:
+    if request.method == "POST" and request.is_json:
         try:
             data = request.json  # Access the JSON data from the request
             # Extract required fields from the JSON data
@@ -99,9 +99,9 @@ def getDoc3():
 
 
 
-@app.route('/individual-reference', methods=["GET"])
+@app.route('/individual-reference', methods=["POST"])
 def getDoc4():
-    if request.method == "GET" and request.is_json:
+    if request.method == "POST" and request.is_json:
         try:
             data = request.json  # Access the JSON data from the request
             # Extract required fields from the JSON data
@@ -127,9 +127,9 @@ def getDoc4():
         return "Only GET requests with JSON data are allowed", 400
 
 
-@app.route('/member-reference', methods=["GET"])
+@app.route('/member-reference', methods=["POST"])
 def getDoc5():
-    if request.method == "GET" and request.is_json:
+    if request.method == "POST" and request.is_json:
         try:
             data = request.json  # Access the JSON data from the request
             # Extract required fields from the JSON data
@@ -155,9 +155,9 @@ def getDoc5():
         return "Only GET requests with JSON data are allowed", 400
 
 
-@app.route('/alumni-reference', methods=["GET"])
+@app.route('/alumni-reference', methods=["POST"])
 def getDoc6():
-    if request.method == "GET" and request.is_json:
+    if request.method == "POST" and request.is_json:
         try:
             data = request.json  # Access the JSON data from the request
             # Extract required fields from the JSON data

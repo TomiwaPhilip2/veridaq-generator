@@ -68,9 +68,15 @@ def generateIndividualReference(
         c.setFillColor("white")
         c.drawString(462.24, 816, badgeID)
 
+        # Define the URL template with a placeholder for the badge ID
+        url_template = 'http://individual.veridaq.com/auth/credential?id={}'
+
+        # Replace the placeholder in the URL template with the actual badge ID
+        url = url_template.format(badgeID)
+
         # Generate QR code and embed it into the PDF
         qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=4, border=4)
-        qr.add_data('http://veridaq.com')  # Replace 'http://your-link.com' with your actual link
+        qr.add_data(url)  # Replace 'http://your-link.com' with your actual link
         qr.make(fit=True)
         img = qr.make_image(fill_color="black")
         img.save('qrcode/individual_qrcode.png')
