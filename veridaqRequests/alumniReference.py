@@ -46,8 +46,10 @@ def generateAlumniReference(
         # Draw "Hello" on the page
         c.drawString(25.2, 560.24, alumniName)
 
-        c.setFont("Montserrat-Bold", 14)
+        c.setFont("Montserrat-Bold", 12)
         c.drawString(200.28, 522.6, alumniID)
+
+        c.setFont("Montserrat-Bold", 12)
         c.drawString(107.4, 495.76, nameOfInstitution)
 
         c.setFont("Montserrat-Regular", 14)
@@ -77,7 +79,7 @@ def generateAlumniReference(
         url = url_template.format(badgeID)
 
         # Generate QR code and embed it into the PDF
-        qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=4, border=4)
+        qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=3, border=4)
         qr.add_data(url)  # Replace 'http://your-link.com' with your actual link
         qr.make(fit=True)
         img = qr.make_image(fill_color="black")

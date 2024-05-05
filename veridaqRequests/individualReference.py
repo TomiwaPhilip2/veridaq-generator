@@ -75,7 +75,7 @@ def generateIndividualReference(
         url = url_template.format(badgeID)
 
         # Generate QR code and embed it into the PDF
-        qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=4, border=4)
+        qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=3, border=4)
         qr.add_data(url)  # Replace 'http://your-link.com' with your actual link
         qr.make(fit=True)
         img = qr.make_image(fill_color="black")

@@ -37,7 +37,7 @@ def generateDocVerification(
         c = canvas.Canvas(packet)
 
         # Set font to Montserrat and font size
-        c.setFont("Montserrat", 20)
+        c.setFont("Montserrat", 12)
 
         # Set text color to white
         c.setFillColor("white")  # White color
@@ -78,7 +78,7 @@ def generateDocVerification(
         url = url_template.format(badgeID)
 
         # Generate QR code and embed it into the PDF
-        qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=4, border=4)
+        qr = qrcode.QRCode(version=1, error_correction=qrcode.constants.ERROR_CORRECT_L, box_size=3, border=4)
         qr.add_data(url)  # Replace 'http://your-link.com' with your actual link
         qr.make(fit=True)
         img = qr.make_image(fill_color="black")
