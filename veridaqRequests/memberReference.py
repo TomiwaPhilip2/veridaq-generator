@@ -66,10 +66,15 @@ def generateMemberReference(
             # Open the image from the response content
             image = Image.open(BytesIO(response.content))
 
+            # Convert the image to RGB mode
+            image = image.convert("RGB")
+
             # Now you can work with the image as needed
             resized_image = image.resize((117, 105))
 
+            # Save the resized image as JPEG
             resized_image.save("images/member_resized_image.jpg")
+
 
         else:
             print("Failed to download the image")
