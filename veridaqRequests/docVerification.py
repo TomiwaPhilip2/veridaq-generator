@@ -37,7 +37,7 @@ def generateDocVerification(
         c = canvas.Canvas(packet)
 
         # Set font to Montserrat and font size
-        c.setFont("Montserrat", 12)
+        c.setFont("Montserrat-ExtraBold", 12)
 
         # Set text color to white
         c.setFillColor("white")  # White color
